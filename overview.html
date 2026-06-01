@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>주제 및 개요 | AI Bootcamp</title>
+    <style>
+        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; margin: 0; padding: 0; background: #f0fdf4; color: #0f172a; }
+        header { background: #166534; color: white; padding: 2.5rem 1.5rem; text-align: center; }
+        main { max-width: 900px; margin: 2rem auto; padding: 1rem; }
+        h1, h2 { margin: 0 0 1rem; }
+        h2 { color: #166534; font-size: 1.5rem; border-bottom: 2px solid #bbf7d0; padding-bottom: 0.5rem; }
+        h3 { margin: 1.5rem 0 0.5rem; color: #0f172a; font-size: 1.2rem; }
+        p { line-height: 1.8; margin-bottom: 1rem; }
+        ul, ol { margin: 1rem 0; padding-left: 1.5rem; line-height: 1.8; }
+        li { margin-bottom: 0.5rem; }
+        .card { background: white; padding: 2rem; border-radius: 12px; box-shadow: 0 4px 10px rgba(0,0,0,0.05); margin-bottom: 2rem; }
+        a { color: #166534; text-decoration: none; font-weight: bold; }
+        a:hover { text-decoration: underline; }
+        .flowchart { background: #f8fafc; padding: 1.5rem; border-radius: 8px; border: 1px dashed #cbd5e1; font-weight: 500; text-align: center; color: #334155; line-height: 2; margin-top: 1rem; }
+        strong { color: #166534; }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>주제 및 개요</h1>
+        <p>[AI Bootcamp 기획안] 지능형 은퇴 설계 Multi-Agent 서비스</p>
+    </header>
+    <main>
+        <section class="card">
+            <h2>1. 🎯 프로젝트 개요 – 기획 배경 및 핵심 가치</h2>
+            
+            <h3>1.1 프로젝트 기획 배경</h3>
+            <ul>
+                <li><strong>해결 과제 (Pain Point):</strong> 복잡한 연금 제도와 매년 변화하는 세법, 방대한 금융 상품 정보 속에서 일반 개인이 '맞춤형 은퇴 시나리오'를 스스로 설계하는 것은 현실적으로 매우 어렵습니다.</li>
+                <li><strong>기존 서비스의 한계:</strong> 대면 재무 상담은 비용과 시간적 진입 장벽이 높습니다. 반면 기존의 단순 LLM 챗봇 서비스는 환각(Hallucination) 리스크가 존재하며, 실시간 시장 데이터나 최신 법령을 정확히 반영하지 못하는 치명적인 한계가 있습니다.</li>
+                <li><strong>Multi-Agent 도입 배경:</strong> 단일 모델의 한계를 극복하기 위해 자산 분석, 세무 검토, 리스크 관리를 각각 전담하는 에이전트들의 '협업(Multi-Agent)' 시스템을 도입했습니다. 이를 통해 전문가 수준의 입체적이고 종합적인 은퇴 설계 리포트를 제공하고자 합니다.</li>
+                <li><strong>기획 동기:</strong> 실무에서 축적한 데이터 다루기 역량과 개인적인 은퇴 설계 니즈를 결합하여, 단순한 토이 프로젝트를 넘어 실제 사용자에게 재무적 가치를 창출하는 '지능형 금융 에이전트'를 구현하는 것이 목표입니다.</li>
+            </ul>
+
+            <h3>1.2 핵심 아이디어 및 가치 제안 (Value Proposition)</h3>
+            <ul>
+                <li><strong>핵심 기능:</strong> 사용자의 목표 은퇴 소득 및 투자 성향을 기반으로 최적의 배당 ETF 포트폴리오를 제안하고, 절세계좌를 활용한 '세후 실수령액' 시뮬레이션을 제공합니다.</li>
+                <li><strong>사용자 가치 (Benefit):</strong> 불확실한 노후 대비에 대해 데이터 기반의 구체적이고 실행 가능한 가이드라인을 제공하여 사용자의 재무적 안정을 돕습니다.</li>
+                <li><strong>기술적 차별성:</strong> 단순한 정보 요약 및 전달을 넘어, 에이전트 간의 '피드백 루프'를 통해 리스크를 상호 검토하고 최적의 대안을 자율적으로 찾아내는 진정한 의미의 자율 에이전트(Autonomous Agent)를 구현합니다.</li>
+            </ul>
+
+            <h3>1.3 대상 사용자 및 기대 사용자 경험 (UX)</h3>
+            <ul>
+                <li><strong>주요 타겟:</strong> 은퇴를 앞두고 구체적인 자산 운용 전략과 세금 최적화 방안이 필요한 직장인 및 개인 투자자</li>
+                <li><strong>사용자 여정 (User Journey):</strong> 기본 자산 정보 및 목표 입력 ➔ 에이전트 간 실시간 협업 및 분석 과정 시각화 ➔ 리스크 교차 검증 ➔ 인터랙티브 차트가 포함된 최종 은퇴 리포트 수령</li>
+                <li><strong>기대 효과:</strong> 복잡한 금융 수식 계산이나 세법 공부 없이도, 단 몇 분 만에 PB(Private Banker) 수준의 최적화된 은퇴 설계도를 얻을 수 있습니다.</li>
+            </ul>
+        </section>
+
+        <section class="card">
+            <h2>2. 🛠️ 기술 구성 – 서비스 적용 기술 스택</h2>
+            
+            <h3>2.1 Prompt Engineering 전략</h3>
+            <ul>
+                <li><strong>역할 기반 페르소나 (Role-based Persona):</strong> 시장 분석(Market), 세무(Tax), 검수(Planner/Risk) 등 각 에이전트에게 명확한 직무 전문성과 제약 조건을 부여합니다.</li>
+                <li><strong>CoT (Chain of Thought):</strong> 금융 계산의 정확도와 논리성을 확보하기 위해 프롬프트 내에 사고 단계를 명시하여 추론 능력을 극대화합니다.</li>
+                <li><strong>구조화된 출력 (Structured Output):</strong> 에이전트 간 데이터 전달 시 Pydantic을 활용한 JSON 형식을 강제하여 파이프라인 내 정보 누락과 포맷 에러를 원천 차단합니다.</li>
+            </ul>
+
+            <h3>2.2 LangGraph 기반 Multi-Agent 아키텍처</h3>
+            <ul>
+                <li><strong>독립적 에이전트 설계:</strong> 4개 이상의 전문 에이전트가 공유 상태(State)를 기반으로 유기적으로 협업합니다.</li>
+                <li><strong>조건부 순환 로직 (Conditional Edge & Loop):</strong> 플래너 에이전트가 논리적 모순이나 리스크를 발견할 경우, 이전 단계(분석가)로 되돌려(ReAct) 전략을 재수립하게 하는 자율 검증 워크플로우를 구현합니다.</li>
+                <li><strong>Tool Calling 연동:</strong> 최신 주가, ETF 정보, 실시간 뉴스 검색 등을 위해 외부 API(DuckDuckGo 등)를 에이전트의 도구로 연결합니다.</li>
+            </ul>
+
+            <h3>2.3 RAG (검색 증강 생성) 구성</h3>
+            <ul>
+                <li><strong>데이터 파이프라인:</strong> 연금법, 소득세법 등 최신 금융 법령 가이드(PDF)를 청킹(Chunking)하여 정제합니다.</li>
+                <li><strong>Vector DB:</strong> 고성능 임베딩 모델(text-embedding-3-large 등)과 FAISS를 활용하여 빠르고 정확한 로컬 검색 엔진을 구축합니다.</li>
+                <li><strong>검색 최적화:</strong> 에이전트가 문맥에 맞는 세법 조항을 동적으로 인출하여 답변의 신뢰도를 높입니다(환각 방지).</li>
+            </ul>
+
+            <h3>2.4 서비스 딜리버리 및 패키징</h3>
+            <ul>
+                <li><strong>Frontend (UI):</strong> Streamlit을 활용하여 사용자 친화적인 입력 폼과 Plotly 기반의 인터랙티브 데이터 시각화 화면을 구성합니다.</li>
+                <li><strong>Backend (API):</strong> FastAPI와 Uvicorn을 통해 비동기 에이전트 워크플로우를 안정적으로 서빙하며, SSE(Server-Sent Events)를 통해 에이전트의 사고 과정을 실시간 스트리밍합니다.</li>
+            </ul>
+        </section>
+
+        <section class="card">
+            <h2>3. 🔄 주요 기능 및 동작 시나리오</h2>
+            
+            <h3>3.1 핵심 동작 시나리오 (Use Case Scenario)</h3>
+            <ol>
+                <li><strong>Input:</strong> 사용자가 목표 월 수입(예: 200만 원)과 투자 성향을 입력합니다.</li>
+                <li><strong>Analysis (시장 분석):</strong> Market Agent가 거시 경제 전망을 반영하여 유망한 배당 ETF 포트폴리오를 도출합니다.</li>
+                <li><strong>Legal/Tax (세무 검토):</strong> Tax Agent가 RAG를 통해 최신 세법을 참조하여 ISA/IRP 등 절세 계좌를 활용한 세후 실수령액을 정밀하게 계산합니다.</li>
+                <li><strong>Review (교차 검증):</strong> Planner Agent(또는 Risk Agent)가 투자 성향 위배 여부 및 계산의 정합성을 비판적으로 검토합니다. (모순 발견 시 2번 단계로 피드백 루프 가동)</li>
+                <li><strong>Output:</strong> 모든 검증이 완료되면, 사용자에게 자산 성장 시뮬레이션 그래프와 구체적인 실행 가이드가 포함된 최종 리포트가 제공됩니다.</li>
+            </ol>
+
+            <h3>3.2 서비스 플로우 차트 (Flow Chart)</h3>
+            <div class="flowchart">
+                User Input ➔ Profiler/State Init ➔ <br>[ Market Analysis ➔ Tax & RAG Strategy ] ➔ <br>Strategy Consolidation ➔ Risk Review & Feedback Loop (조건부 회귀) ➔ <br>최종 UI Output (인터랙티브 리포트)
+            </div>
+            <div style="text-align: center; margin-top: 1.5rem;">
+                <img src="3.2.service-flow-diagram.png" alt="서비스 플로우 차트 다이어그램" style="max-width: 100%; height: auto; border-radius: 8px; box-shadow: 0 4px 6px rgba(0,0,0,0.1);">
+            </div>
+        </section>
+
+        <section class="card">
+            <h2>4. 🚀 향후 고도화 방안 (선택적 확장 기능)</h2>
+            <ul>
+                <li><strong>데이터 개인화 극대화:</strong> 사용자의 과거 투자 내역이나 기존 포트폴리오(CSV/Excel)를 업로드받아, 현재 자산 상태를 기반으로 한 초개인화 리밸런싱 제안 기능을 추가할 수 있습니다.</li>
+                <li><strong>사후 관리 및 알림 채널 연동:</strong> 초기 설계에 머물지 않고, 시장 급변이나 관련 세법 개정 시나리오 발생 시 사용자에게 포트폴리오 조정 알림을 발송하는 모니터링 시스템으로 확장 가능합니다.</li>
+            </ul>
+        </section>
+
+        <p><a href="index.html">← 메인 페이지로 돌아가기</a></p>
+    </main>
+</body>
+</html>

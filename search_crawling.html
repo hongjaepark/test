@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>검색 및 크롤링 상세 설명</title>
+    <style>
+        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; margin: 0; padding: 0; background: #f0fdf4; color: #0f172a; }
+        header { background: #166534; color: white; padding: 2.5rem 1.5rem; text-align: center; }
+        main { max-width: 900px; margin: 2rem auto; padding: 1rem; }
+        h1, h2 { margin: 0 0 1rem; }
+        h2 { color: #166534; font-size: 1.4rem; }
+        p { line-height: 1.8; margin-bottom: 1rem; }
+        ul, ol { margin: 1rem 0; padding-left: 1.5rem; line-height: 1.8; }
+        li { margin-bottom: 0.5rem; }
+        .card { background: white; padding: 1.8rem; border-radius: 12px; box-shadow: 0 4px 10px rgba(0,0,0,0.05); margin-bottom: 2rem; }
+        a { color: #166534; text-decoration: none; font-weight: bold; }
+        a:hover { text-decoration: underline; }
+        code { background: #e2e8f0; padding: 0.2rem 0.4rem; border-radius: 4px; font-family: Consolas, monospace; font-size: 0.9em; }
+        .intro-text { font-size: 1.05rem; }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>검색 및 크롤링 (Tools)</h1>
+        <p>AI 에이전트의 지식을 외부로 확장하는 실시간 데이터 수집 도구</p>
+    </header>
+    <main>
+        <div class="card intro-text">
+            <p>LLM(대형 언어 모델)은 학습된 시점 이후의 최신 정보나, 학습 데이터에 포함되지 않은 특정 사실을 알지 못하는 한계가 있습니다. 이를 극복하기 위해 에이전트에게 <strong>직접 인터넷을 검색하고 문서를 읽어올 수 있는 도구(Tool)</strong>를 쥐여주게 되며, 이 프로젝트에서는 다음 세 가지 라이브러리를 활용합니다.</p>
+        </div>
+
+        <section class="card">
+            <h2>1. 🦆 DuckDuckGo Search (duckduckgo_search)</h2>
+            <p>API 키 발급이나 제한 없이 무료로 사용할 수 있는 파이썬 인터넷 검색 라이브러리입니다.</p>
+            <ul>
+                <li>에이전트가 "최신 ISA 계좌 혜택 한도" 같은 키워드를 생성해 넘기면, 구글이나 네이버처럼 웹 검색 결과를 반환합니다.</li>
+                <li>검색된 웹 문서의 제목, 요약 스니펫, URL을 가져와 에이전트의 상황 판단을 돕습니다.</li>
+            </ul>
+            <p>※ DuckDuckGo는 어린이 게임 “Duck Duck Goose”에서 따온, 의미보다는 기억하기 쉬운 브랜드 이름입니다.</p>
+            <p>👉 즉,</p>
+            <ul>
+                <p>깊은 기술적 의미 ❌</p>
+                <p>철학적 메시지 ❌</p>
+                <p>그냥 “재밌고 기억하기 쉬운 이름” ✅</p>
+            </ul>
+        </section>
+
+        <section class="card">
+            <h2>2. 🌐 Wikipedia (wikipedia)</h2>
+            <p>위키백과의 방대한 데이터를 파이썬으로 쉽게 검색하고 가져올 수 있는 라이브러리입니다.</p>
+            <ul>
+                <li>특정 금융 용어(예: "ETF", "리츠")나 일반적인 사실 관계에 대한 정확하고 객관적인 지식이 필요할 때, 신뢰할 수 있는 백과사전 데이터를 에이전트에게 제공합니다.</li>
+            </ul>
+        </section>
+
+        <section class="card">
+            <h2>3. 🍲 BeautifulSoup4 (beautifulsoup4)</h2>
+            <p>웹 페이지의 복잡한 HTML 문서에서 우리가 원하는 텍스트 데이터만 깔끔하게 발라내는(파싱하는) 강력한 크롤링 도구입니다.</p>
+            <ul>
+                <li>DuckDuckGo로 찾은 웹페이지 URL에 접속했을 때, 수많은 광고나 HTML 태그(<code style="font-size:0.8em;">&lt;div&gt;, &lt;span&gt;</code>)를 제거하고 <strong>에이전트가 읽기 편한 순수 텍스트 본문</strong>만 추출하는 데 필수적인 역할을 합니다.</li>
+            </ul>
+        </section>
+
+        <section class="card">
+            <h2>💡 future-planner 프로젝트에서의 시너지</h2>
+            <p>이 도구들은 LangGraph의 <strong>ReAct 패턴</strong>과 결합하여 강력한 시너지를 냅니다. 세무 전문가(Tax Expert) 에이전트가 FAISS 벡터 DB에 원하는 세법 정보가 없다고 판단하면, 스스로 <code>search_retirement_knowledge</code>와 같은 Tool을 호출하여 DuckDuckGo로 최신 뉴스를 검색하고, BeautifulSoup으로 기사 본문을 크롤링하여 읽은 뒤, 사용자에게 가장 정확한 절세 전략을 제안하게 됩니다.</p>
+            <p>src/graph/workflow.py 코드를 보면 search_retirement_knowledge라는 도구를 ToolNode에 등록하여 사용하고 있습니다. 이 세 가지 라이브러리가 결합되면 tax_expert 에이전트는 마치 실제 사람처럼 인터넷을 활용하는 강력한 능력을 갖추게 됩니다.</p>
+            <ul>
+                <li>모르는 최신 세법이나 정책이 있으면 <strong>DuckDuckGo</strong>로 검색하고,</li>
+                <li>전문적인 금융 용어 확인이 필요하면 <strong>Wikipedia</strong>를 찾아보며,</li>
+                <li>검색된 유망한 뉴스나 가이드 링크에 접속해 <strong>BeautifulSoup4</strong>로 본문만 긁어와서 꼼꼼히 읽습니다.</li>
+            </ul>
+            <p>결과적으로 이 도구들은 LLM의 가장 큰 약점인 '환각(Hallucination, 거짓말)' 현상을 방지하고, 에이전트가 항상 최신의 정확한 외부 근거를 바탕으로 사용자에게 신뢰할 수 있는 은퇴 및 세무 설계 리포트를 제공할 수 있게 만들어 주는 핵심 부품들입니다.</p>
+        </section>
+
+        <p><a href="applied_tech.html">← 적용 기술 페이지로 돌아가기</a></p>
+    </main>
+</body>
+</html>

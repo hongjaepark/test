@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Azure OpenAI 상세 설명</title>
+    <style>
+        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; margin: 0; padding: 0; background: #f0fdf4; color: #0f172a; }
+        header { background: #166534; color: white; padding: 2.5rem 1.5rem; text-align: center; }
+        main { max-width: 900px; margin: 2rem auto; padding: 1rem; }
+        h1, h2 { margin: 0 0 1rem; }
+        h2 { color: #166534; font-size: 1.4rem; }
+        p { line-height: 1.8; margin-bottom: 1rem; }
+        ul, ol { margin: 1rem 0; padding-left: 1.5rem; line-height: 1.8; }
+        li { margin-bottom: 0.5rem; }
+        .card { background: white; padding: 1.8rem; border-radius: 12px; box-shadow: 0 4px 10px rgba(0,0,0,0.05); margin-bottom: 2rem; }
+        a { color: #166534; text-decoration: none; font-weight: bold; }
+        a:hover { text-decoration: underline; }
+        code { background: #e2e8f0; padding: 0.2rem 0.4rem; border-radius: 4px; font-family: Consolas, monospace; font-size: 0.9em; }
+        .intro-text { font-size: 1.05rem; }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Azure OpenAI</h1>
+        <p>엔터프라이즈급 보안과 성능을 제공하는 핵심 언어 모델 공급자</p>
+    </header>
+    <main>
+        <div class="card intro-text">
+            <p><strong>Azure OpenAI</strong>는 Microsoft Azure 클라우드 인프라 위에서 OpenAI의 강력한 언어 모델(GPT-4, GPT-3.5-Turbo 등)을 사용할 수 있게 해주는 서비스입니다.</p>
+        </div>
+
+        <section class="card">
+            <h2>1. 🛡️ 엔터프라이즈급 보안 및 규정 준수</h2>
+            <p>일반적인 퍼블릭 OpenAI API와 달리, 기업 환경에 맞춘 보안을 제공합니다.</p>
+            <ul>
+                <li>고객이 입력한 프롬프트(데이터)가 모델 학습에 사용되지 않도록 보장합니다.</li>
+                <li>금융 데이터나 개인 정보(세무 정보 등)를 다뤄야 하는 <strong>future-planner</strong> 프로젝트 특성상 <strong>보안이 매우 중요</strong>하므로 채택되었습니다.</li>
+            </ul>
+        </section>
+
+        <section class="card">
+            <h2>2. 🚀 안정적인 성능 (SLA 보장)</h2>
+            <p>Azure의 글로벌 인프라를 활용하여 높은 가용성과 빠른 응답 속도를 제공합니다.</p>
+            <ul>
+                <li>엔터프라이즈 트래픽에 맞춰 할당량을 조절하고, 갑작스러운 트래픽 증가에도 안정적인 서비스를 유지할 수 있습니다.</li>
+            </ul>
+        </section>
+
+        <section class="card">
+            <h2>3. 💡 future-planner 프로젝트에서의 역할</h2>
+            <p>이 프로젝트에서 Azure OpenAI는 다음과 같은 형태로 에이전트들의 <strong>핵심 지능(두뇌)</strong> 역할을 수행합니다.</p>
+            <ul>
+                <li><strong>Market Analyzer:</strong> 사용자의 성향을 분석하여 최적의 ETF 비율을 계산해내는 추론 능력.</li>
+                <li><strong>Tax Expert:</strong> 어려운 세법 문서를 읽고(RAG) 문맥을 파악하여 절세 방안을 찾아내는 독해 능력.</li>
+                <li><strong>Planner Inspector:</strong> 여러 에이전트의 결과를 취합하여 사람에게 자연스러운 문장으로 피드백을 작성해 주는 생성 능력.</li>
+            </ul>
+            <p style="margin-top: 1.5rem; padding: 1rem; background: #f0fdf4; border-left: 4px solid #166534;">프로젝트의 <code>.env</code> 파일에 Azure 엔드포인트와 API 키를 설정하고, LangChain의 <code>AzureChatOpenAI</code> 클래스를 통해 이 강력한 지능을 애플리케이션에 연결하고 있습니다.</p>
+        </section>
+
+        <p><a href="applied_tech.html">← 적용 기술 페이지로 돌아가기</a></p>
+    </main>
+</body>
+</html>

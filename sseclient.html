@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SSEClient 상세 설명</title>
+    <style>
+        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; margin: 0; padding: 0; background: #f0fdf4; color: #0f172a; }
+        header { background: #166534; color: white; padding: 2.5rem 1.5rem; text-align: center; }
+        main { max-width: 900px; margin: 2rem auto; padding: 1rem; }
+        h1, h2 { margin: 0 0 1rem; }
+        h2 { color: #166534; font-size: 1.4rem; }
+        p { line-height: 1.8; margin-bottom: 1rem; }
+        ul, ol { margin: 1rem 0; padding-left: 1.5rem; line-height: 1.8; }
+        li { margin-bottom: 0.5rem; }
+        .card { background: white; padding: 1.8rem; border-radius: 12px; box-shadow: 0 4px 10px rgba(0,0,0,0.05); margin-bottom: 2rem; }
+        a { color: #166534; text-decoration: none; font-weight: bold; }
+        a:hover { text-decoration: underline; }
+        code { background: #e2e8f0; padding: 0.2rem 0.4rem; border-radius: 4px; font-family: Consolas, monospace; font-size: 0.9em; }
+        .intro-text { font-size: 1.05rem; }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>SSEClient (Server-Sent Events)</h1>
+        <p>LLM의 응답을 실시간으로 프론트엔드에 스트리밍(Streaming)하는 통신 라이브러리</p>
+    </header>
+    <main>
+        <div class="card intro-text">
+            <p><strong>SSEClient</strong>는 서버가 클라이언트(웹 브라우저 등)에게 실시간으로 데이터를 밀어내듯 전송할 수 있는 웹 표준 기술인 <strong>SSE(Server-Sent Events)</strong>를 파이썬에서 쉽게 다룰 수 있게 해주는 라이브러리입니다.</p>
+        </div>
+
+        <section class="card">
+            <h2>1. 📡 Server-Sent Events 란?</h2>
+            <p>일반적인 웹 통신(HTTP)은 클라이언트가 요청(Request)을 보내야만 서버가 응답(Response)을 주는 단발성 구조입니다.</p>
+            <ul>
+                <li><strong>SSE의 특징:</strong> 한 번 연결을 맺어두면, 서버가 원할 때마다 <strong>단방향으로 계속해서 데이터를 쪼개어(Chunk) 전송</strong>할 수 있습니다.</li>
+                <li><strong>웹소켓(WebSocket)과의 차이:</strong> 웹소켓은 양방향 통신이라 무겁고 복잡한 반면, SSE는 서버 ➔ 클라이언트 단방향 전송에 특화되어 있어 가볍고 일반적인 HTTP 프로토콜 위에서 완벽하게 동작합니다.</li>
+            </ul>
+        </section>
+
+        <section class="card">
+            <h2>2. ⏱️ LLM 서비스에서 스트리밍이 필수인 이유</h2>
+            <p>AI 모델이 복잡한 계산이나 긴 글을 작성할 때, 전체 문장이 다 완성될 때까지 기다렸다가 한 번에 화면에 뿌려준다면 사용자는 시스템이 멈춘 것(프리징)으로 오해할 수 있습니다.</p>
+            <ul>
+                <li>LLM은 단어를 한 토큰(Token)씩 순차적으로 생성합니다.</li>
+                <li>스트리밍 방식을 적용하면, AI가 단어를 하나 생각해 낼 때마다 즉시 화면에 보여줄 수 있어 <strong>사용자가 느끼는 대기 시간(Perceived Latency)</strong>이 혁신적으로 짧아집니다.</li>
+            </ul>
+        </section>
+
+        <section class="card">
+            <h2>3. 💡 future-planner 프로젝트에서의 역할</h2>
+            <p>현재 프로젝트는 백엔드(FastAPI)와 프론트엔드(Streamlit)가 분리되어 통신하는 구조입니다.</p>
+            <ul>
+                <li>FastAPI 서버 내의 LangGraph 에이전트들이 도출해낸 분석 결과와 텍스트를 쪼개어 스트리밍 형태로 내보냅니다.</li>
+                <li>프론트엔드의 <code>streamlit_app.py</code>에서 <strong>SSEClient</strong>가 이 조각들을 실시간으로 받아채서, 화면에 <strong>마치 타자를 치듯 한 글자씩 출력되는 ChatGPT 스타일의 매끄러운 UI</strong>를 구현하는 핵심 역할을 수행합니다.</li>
+            </ul>
+        </section>
+
+        <p><a href="applied_tech.html">← 적용 기술 페이지로 돌아가기</a></p>
+    </main>
+</body>
+</html>

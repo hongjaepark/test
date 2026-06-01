@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Streamlit 상세 설명</title>
+    <style>
+        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; margin: 0; padding: 0; background: #f0fdf4; color: #0f172a; }
+        header { background: #166534; color: white; padding: 2.5rem 1.5rem; text-align: center; }
+        main { max-width: 900px; margin: 2rem auto; padding: 1rem; }
+        h1, h2 { margin: 0 0 1rem; }
+        h2 { color: #166534; font-size: 1.4rem; }
+        p { line-height: 1.8; margin-bottom: 1rem; }
+        ul, ol { margin: 1rem 0; padding-left: 1.5rem; line-height: 1.8; }
+        li { margin-bottom: 0.5rem; }
+        .card { background: white; padding: 1.8rem; border-radius: 12px; box-shadow: 0 4px 10px rgba(0,0,0,0.05); margin-bottom: 2rem; }
+        a { color: #166534; text-decoration: none; font-weight: bold; }
+        a:hover { text-decoration: underline; }
+        code { background: #e2e8f0; padding: 0.2rem 0.4rem; border-radius: 4px; font-family: Consolas, monospace; font-size: 0.9em; }
+        .intro-text { font-size: 1.05rem; }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Streamlit</h1>
+        <p>데이터 과학 및 AI 애플리케이션을 위한 빠르고 직관적인 파이썬 웹 UI 프레임워크</p>
+    </header>
+    <main>
+        <div class="card intro-text">
+            <p><strong>Streamlit</strong>은 파이썬 스크립트만으로 데이터 분석 대시보드나 AI 챗봇 화면 같은 웹 애플리케이션을 단 몇 분 만에 구축할 수 있게 해주는 강력한 오픈소스 프레임워크입니다.</p>
+        </div>
+
+        <section class="card">
+            <h2>1. 🎨 프론트엔드 지식 없이 웹 UI 구축</h2>
+            <p>HTML, CSS, JavaScript 등 복잡한 프론트엔드 기술을 몰라도 파이썬 코드만으로 훌륭한 인터랙티브 UI를 만들 수 있습니다.</p>
+            <ul>
+                <li><code>st.text_input()</code> 한 줄로 텍스트 입력 창을 만듭니다.</li>
+                <li><code>st.button()</code>으로 클릭 이벤트를 쉽게 처리합니다.</li>
+            </ul>
+        </section>
+
+        <section class="card">
+            <h2>2. 💡 future-planner 프로젝트에서의 역할</h2>
+            <p><code>streamlit_app.py</code> 파일에서 다음과 같이 <strong>사용자와 AI 에이전트 간의 핵심 소통 창구(UI/UX)</strong> 역할을 담당합니다.</p>
+            <ul>
+                <li><strong>사이드바 (입력부):</strong> <code>st.sidebar</code>를 활용해 사용자의 목표 월 소득, 투자 성향 등 기초 데이터를 직관적으로 입력받습니다.</li>
+                <li><strong>파일 업로드:</strong> <code>st.file_uploader</code>를 사용해 사용자가 세법 가이드(PDF) 등을 업로드하면 서버(RAG용 벡터 DB)로 손쉽게 전달합니다.</li>
+                <li><strong>상태 유지:</strong> <code>st.session_state</code>를 이용해 사용자가 다른 옵션을 조작해도 과거 분석 결과(History)가 사라지지 않고 유지되게 관리합니다.</li>
+                <li><strong>결과 시각화:</strong> 백엔드에서 전달된 JSON 데이터를 바탕으로 파이 차트나 그래프를 그려 화려한 리포트를 화면에 보여줍니다.</li>
+            </ul>
+        </section>
+
+        <section class="card">
+            <h2>3. 🚀 빠른 프로토타이핑</h2>
+            <p>코드를 수정하고 저장하면 웹 브라우저에서 바로 변경된 화면을 확인할 수 있어, AI 모델의 프롬프트를 테스트하고 결과를 확인하는 주기를 단축시켜 줍니다.</p>
+            <p style="margin-top: 1.5rem; padding: 1rem; background: #f0fdf4; border-left: 4px solid #166534;">결과적으로 이 프로젝트에서 Streamlit은 복잡한 무대 뒤의 백엔드(FastAPI) 및 AI 파이프라인(LangGraph) 연산 결과를 <strong>사용자가 보기 쉽고 다루기 편한 형태로 예쁘게 포장해 주는 최전선 화면</strong> 역할을 수행하고 있습니다.</p>
+        </section>
+
+        <p><a href="applied_tech.html">← 적용 기술 페이지로 돌아가기</a></p>
+    </main>
+</body>
+</html>

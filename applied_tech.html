@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Bootcamp 적용 기술</title>
+    <style>
+        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; margin: 0; padding: 0; background: #f0fdf4; color: #0f172a; }
+        header { background: #166534; color: white; padding: 2.5rem 1.5rem; text-align: center; }
+        main { max-width: 900px; margin: 2rem auto; padding: 1rem; }
+        h1, h2 { margin: 0 0 1rem; }
+        h3 { margin: 1.5rem 0 0.5rem; color: #166534; }
+        p { line-height: 1.8; margin-bottom: 1rem; }
+        ul { margin: 1rem 0; padding-left: 1.5rem; line-height: 1.8; }
+        li { margin-bottom: 0.8rem; }
+        .card { background: white; padding: 1.8rem; border-radius: 12px; box-shadow: 0 4px 10px rgba(0,0,0,0.05); margin-bottom: 2rem; }
+        a { color: #166534; text-decoration: none; font-weight: bold; }
+        a:hover { text-decoration: underline; }
+        strong { color: #166534; }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>적용 기술 (Tech Stack)</h1>
+        <p>LLM 기반의 Multi-Agent 시스템으로 적용된 주요 기술 스택을 소개합니다.</p>
+    </header>
+    <main>
+        <section class="card">
+            <h2>1. 🧠 Core AI & 다중 에이전트 프레임워크 (LLM & Agents)</h2>
+            <ul>
+                <li><strong>LangChain (<a href="langchain.html">langchain, langchain-openai</a>):</strong> LLM 애플리케이션 개발을 위한 핵심 프레임워크로, 프롬프트 관리(<code>prompts.py</code>) 및 모델과의 상호작용에 사용되고 있습니다.</li>
+                <li><strong>LangGraph (<a href="langgraph.html">langgraph</a>):</strong> Agent 간의 워크플로우를 정의하고 상태를 관리하는 데 사용되었습니다. <code>workflow.py</code>를 보면 StateGraph를 통해 Market Analyzer ➔ Tax Expert ➔ Planner로 이어지는 파이프라인과 ReAct 패턴(도구 실행 후 재평가) 및 피드백 기반의 자율 루프(재분석)를 구현하고 있습니다.</li>
+                <li><strong>Azure OpenAI (<a href="azure_openai.html">openai</a>):</strong> 핵심 언어 모델(LLM) 공급자입니다.</li>
+                <li><strong>Pydantic (<a href="pydantic.html">pydantic</a>):</strong> <code>schemas.py</code>에서 볼 수 있듯이, LLM의 응답을 정형화된 JSON 형태(ETFItem, MarketAnalysis, TaxStrategy)로 강제하고 검증하기 위해 사용되었습니다.</li>
+            </ul>
+        </section>
+
+        <section class="card">
+            <h2>2. 🔍 RAG (검색 증강 생성) 및 외부 도구 (Tools)</h2>
+            <ul>
+                <li><strong>FAISS (<a href="faiss.html">faiss-cpu</a>):</strong> 페이스북(Meta)에서 만든 로컬 벡터 데이터베이스로, 세법 가이드 등 특정 지식 데이터를 임베딩하고 검색(RAG)하는데 사용됩니다.</li>
+                <li><strong>검색 및 크롤링 (<a href="search_crawling.html">duckduckgo_search, wikipedia, beautifulsoup4</a>):</strong> 에이전트가 외부의 최신 정보를 검색하거나 문서를 읽어오기 위한 도구(Tool)로 사용됩니다. (예: <code>search_retirement_knowledge</code> 도구)</li>
+            </ul>
+        </section>
+
+        <section class="card">
+            <h2>3. 🌐 웹 프론트엔드 & 백엔드 (Web & API)</h2>
+            <ul>
+                <li><strong>Streamlit (<a href="streamlit.html">streamlit</a>):</strong> 빠르고 직관적인 파이썬 기반의 웹 UI/UX를 구축하는 프레임워크입니다. 사용자의 투자 성향을 입력받고 최종 리포트를 보여주는 화면을 구성하는데 사용되었습니다.</li>
+                <li><strong>FastAPI & Uvicorn (<a href="fastapi_uvicorn.html">fastapi, uvicorn</a>):</strong> 고성능 비동기 Python 웹 프레임워크로, 백엔드 API 서버를 구축하는데 사용되었습니다.</li>
+                <li><strong>SSEClient (<a href="sseclient.html">sseclient</a>):</strong> Server-Sent Events를 처리하기 위한 라이브러리로, LLM의 응답을 실시간 스트리밍(Streaming) 방식으로 프론트엔드에 전달하기 위해 사용되었습니다.</li>
+            </ul>
+        </section>
+
+        <section class="card">
+            <h2>4. 📊 시각화 및 모니터링 (Observability & Visulization)</h2>
+            <ul>
+                <li><strong>Langfuse (<a href="langfuse.html">langfuse</a>):</strong> LLM 애플리케이션의 프롬프트, 응답 시간, 토큰 사용량, 체인 실행 과정 등을 추적(Tracing)하고 모니터링하는데 사용되는 LLMOps 도구입니다.</li>
+                <li><strong>Matplotlib (<a href="matplotlib.html">matplotlib</a>):</strong> 파이썬의 대표적인 데이터 시각화 라이브러리로, 포트폴리오의 자산 비중(예: 파이 차트)이나 예상 수익률 그래프 등을 그리는데 사용되었습니다.</li>
+            </ul>
+        </section>
+
+        <p><a href="index.html">← 메인 페이지로 돌아가기</a></p>
+    </main>
+</body>
+</html>

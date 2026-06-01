@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FastAPI & Uvicorn 상세 설명</title>
+    <style>
+        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; margin: 0; padding: 0; background: #f0fdf4; color: #0f172a; }
+        header { background: #166534; color: white; padding: 2.5rem 1.5rem; text-align: center; }
+        main { max-width: 900px; margin: 2rem auto; padding: 1rem; }
+        h1, h2 { margin: 0 0 1rem; }
+        h2 { color: #166534; font-size: 1.4rem; }
+        p { line-height: 1.8; margin-bottom: 1rem; }
+        ul, ol { margin: 1rem 0; padding-left: 1.5rem; line-height: 1.8; }
+        li { margin-bottom: 0.5rem; }
+        .card { background: white; padding: 1.8rem; border-radius: 12px; box-shadow: 0 4px 10px rgba(0,0,0,0.05); margin-bottom: 2rem; }
+        a { color: #166534; text-decoration: none; font-weight: bold; }
+        a:hover { text-decoration: underline; }
+        code { background: #e2e8f0; padding: 0.2rem 0.4rem; border-radius: 4px; font-family: Consolas, monospace; font-size: 0.9em; }
+        .intro-text { font-size: 1.05rem; }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>FastAPI & Uvicorn</h1>
+        <p>최신 파이썬 백엔드 개발 및 AI/LLM 서비스 구축을 위한 강력한 조합</p>
+    </header>
+    <main>
+        <div class="card intro-text">
+            <p><strong>FastAPI</strong>와 <strong>Uvicorn</strong>은 최신 파이썬 백엔드 개발, 특히 AI 및 LLM(대형 언어 모델) 서비스 구축에 있어 가장 강력하고 인기 있는 조합입니다.</p>
+        </div>
+
+        <section class="card">
+            <h2>1. ⚡ FastAPI (빠르고 모던한 웹 프레임워크)</h2>
+            <p>FastAPI는 파이썬으로 API(백엔드 서버)를 만들기 위한 웹 프레임워크입니다. 이름에서 알 수 있듯이 매우 빠르며, Node.js나 Go와 비견될 정도의 높은 성능을 자랑합니다.</p>
+            <ul>
+                <li><strong>Pydantic과의 완벽한 호환:</strong> <code>schemas.py</code>에도 Pydantic이 사용됩니다. FastAPI는 Pydantic을 기본 데이터 유효성 검사 도구로 사용합니다. 클라이언트(웹 브라우저나 Streamlit)가 데이터를 보내면, FastAPI는 Pydantic 모델(MarketAnalysis 등)을 사용해 자동으로 데이터를 검사하고 변환해 줍니다.</li>
+                <li><strong>비동기(Async) 최적화:</strong> LLM(OpenAI)에 질문을 던지고 답변을 기다리는 작업은 시간이 꽤 걸립니다(네트워크 I/O 대기). FastAPI는 async/await 비동기 처리를 기본적으로 지원하여, 앞사람의 LLM 답변을 기다리는 동안 서버가 멈추지 않고 다른 사람의 요청을 처리할 수 있게 해줍니다.</li>
+                <li><strong>자동 문서화:</strong> 코드를 짜기만 해도 Swagger UI라는 API 테스트 및 문서화 페이지를 자동으로 만들어줍니다.</li>
+            </ul>
+        </section>
+
+        <section class="card">
+            <h2>2. 🦄 Uvicorn (비동기 웹 서버)</h2>
+            <p>FastAPI가 '어떤 주소로 요청이 오면 어떤 응답을 줄지' 규칙을 정하는 <strong>설계도(프레임워크)</strong>라면, Uvicorn은 그 설계도를 바탕으로 실제 인터넷의 요청을 받아 FastAPI에게 전달해 주는 <strong>웹 서버(실행 환경)</strong>입니다.</p>
+            <ul>
+                <li><strong>ASGI 서버:</strong> 파이썬 표준 비동기 웹 서버 인터페이스(ASGI)를 구현한 대표적인 서버입니다.</li>
+                <li><strong>왜 FastAPI와 짝꿍일까?:</strong> FastAPI 자체는 서버를 실행하는 기능이 없기 때문에, 비동기 처리에 특화된 Uvicorn 위에 FastAPI를 올려서 실행(<code>uvicorn main:app --reload</code>와 같은 명령어 사용)하게 됩니다.</li>
+            </ul>
+        </section>
+
+        <section class="card">
+            <h2>💡 future-planner 프로젝트에서의 시너지</h2>
+            <p>현재 이 프로젝트는 LangGraph와 OpenAI를 활용해 복잡한 'Multi-Agent' 워크플로우를 돌리고 있습니다.</p>
+            <ol>
+                <li>사용자가 Streamlit 화면에서 투자 성향을 입력합니다.</li>
+                <li>이 요청은 Uvicorn이 받아서 FastAPI로 넘겨줍니다.</li>
+                <li>FastAPI는 LangGraph 워크플로우(<code>app.invoke(...)</code> 또는 스트리밍)를 비동기적으로 실행시킵니다.</li>
+                <li>LLM이 답변을 생성하는 동안 다른 작업을 블로킹(지연)시키지 않으며, <code>requirements.txt</code>에 있는 <code>sseclient</code>와 결합하여 ChatGPT처럼 글자가 한 글자씩 타자 치듯 나오는 <strong>실시간 스트리밍(SSE)</strong> 기능을 프론트엔드에 안정적으로 전달할 수 있습니다.</li>
+            </ol>
+            <p style="margin-top: 1.5rem; padding: 1rem; background: #f0fdf4; border-left: 4px solid #166534;">
+                <strong>결론적으로</strong> FastAPI와 Uvicorn 조합은 무거운 AI 연산과 긴 대기 시간을 효율적으로 처리해야 하는 현재 프로젝트에 가장 완벽하게 들어맞는 백엔드 엔진이라고 볼 수 있습니다.
+            </p>
+        </section>
+
+        <p><a href="applied_tech.html">← 적용 기술 페이지로 돌아가기</a></p>
+    </main>
+</body>
+</html>

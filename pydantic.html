@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pydantic 상세 설명</title>
+    <style>
+        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; margin: 0; padding: 0; background: #f0fdf4; color: #0f172a; }
+        header { background: #166534; color: white; padding: 2.5rem 1.5rem; text-align: center; }
+        main { max-width: 900px; margin: 2rem auto; padding: 1rem; }
+        h1, h2 { margin: 0 0 1rem; }
+        h2 { color: #166534; font-size: 1.4rem; }
+        p { line-height: 1.8; margin-bottom: 1rem; }
+        ul, ol { margin: 1rem 0; padding-left: 1.5rem; line-height: 1.8; }
+        li { margin-bottom: 0.5rem; }
+        .card { background: white; padding: 1.8rem; border-radius: 12px; box-shadow: 0 4px 10px rgba(0,0,0,0.05); margin-bottom: 2rem; }
+        a { color: #166534; text-decoration: none; font-weight: bold; }
+        a:hover { text-decoration: underline; }
+        pre { background: #1e293b; color: #f8fafc; padding: 1.2rem; border-radius: 8px; overflow-x: auto; line-height: 1.5; font-family: Consolas, Monaco, 'Courier New', monospace; margin: 1rem 0; }
+        code { font-family: Consolas, Monaco, 'Courier New', monospace; }
+        .intro-text { font-size: 1.05rem; }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Pydantic (데이터 유효성 검사)</h1>
+        <p>파이썬의 타입 힌트를 활용한 데이터 구조화 및 검증 라이브러리</p>
+    </header>
+    <main>
+        <div class="card intro-text">
+            <p><strong>Pydantic</strong>은 파이썬의 타입 힌트(Type Hints)를 활용하여 <strong>데이터 유효성 검사(Data Validation)</strong>와 데이터 구조화를 도와주는 매우 강력하고 인기 있는 라이브러리입니다.</p>
+            <p>현재 future-planner 프로젝트에서는 대형 언어 모델(LLM)이 반환하는 텍스트 형태의 응답을 파이썬에서 다루기 쉬운 정형화된 객체(JSON 구조)로 강제하고 검증하기 위해 사용되고 있습니다.</p>
+            <p>프로젝트의 <code>.\work\future-planner\src\agents\schemas.py</code> 파일을 바탕으로 한 Pydantic 설명입니다.</p>
+        </div>
+
+        <section class="card">
+            <h2>1. BaseModel을 통한 직관적인 데이터 모델링</h2>
+            <p>Pydantic을 사용할 때는 항상 <code>BaseModel</code>을 상속받아 클래스를 만듭니다.</p>
+<pre><code>from pydantic import BaseModel, Field
+from typing import List
+
+class ETFItem(BaseModel):
+    ticker: str
+    weight: int = 25</code></pre>
+            <p>이렇게 정의하면, 데이터를 객체로 생성할 때 지정한 타입(str, int)이 맞는지 런타임에 자동으로 검사합니다. 만약 문자로 "25"가 들어와도 Pydantic이 똑똑하게 정수 25로 자동 형변환(Casting)을 해줍니다.</p>
+        </section>
+
+        <section class="card">
+            <h2>2. Field 객체를 통한 메타데이터 및 제약 조건 부여</h2>
+            <p>프로젝트 코드를 보면 <code>Field</code>를 적극적으로 활용하고 있습니다.</p>
+<pre><code>class TaxStrategy(BaseModel):
+    account_types: List[str] = Field(default_factory=list, description="추천하는 계좌 유형 (ISA, IRP, 연금저축 등)")
+    tax_benefit_summary: str = Field(description="절세 혜택 및 세금 절감 효과 요약")
+    net_income_estimate: int = Field(description="세후 월 예상 실수령액 (원 단위)")</code></pre>
+            <ul>
+                <li><code>default_factory=list</code>: 리스트의 기본값을 안전하게 빈 리스트([])로 설정합니다.</li>
+                <li><code>description="..."</code>: (★가장 중요) 일반적인 웹 개발에서는 문서화 용도로 쓰이지만, LangChain과 OpenAI 같은 LLM 환경에서는 이 description이 <strong>프롬프트의 일부</strong>로 작용합니다. LLM에게 "이 필드에는 이런 내용(예: 세후 월 예상 실수령액)을 원 단위 정수로 넣어줘!"라고 지시하는 가이드라인 역할을 하여, AI가 엉뚱한 데이터를 반환하는 <strong>환각(Hallucination) 현상을 크게 줄여줍니다.</strong></li>
+            </ul>
+        </section>
+
+        <section class="card">
+            <h2>3. LLM 프로젝트에서 Pydantic이 필수적인 이유 (Output Parsing)</h2>
+            <p>LLM의 응답은 기본적으로 긴 "텍스트(문자열)"입니다. 하지만 애플리케이션(예: Streamlit 화면에 차트를 그리거나 DB에 저장)에서 이를 활용하려면 딕셔너리나 파이썬 객체 형태여야 합니다.</p>
+            <p>Pydantic을 LangChain과 함께 사용하면 다음과 같은 흐름이 가능해집니다.</p>
+            <ol>
+                <li>Pydantic 클래스(<code>MarketAnalysis</code>)의 구조를 JSON 스키마로 변환하여 LLM에게 전달합니다.</li>
+                <li>LLM이 그 규칙에 맞춰 JSON 형태의 텍스트를 응답합니다.</li>
+                <li>LangChain의 <strong>Output Parser</strong>가 그 텍스트를 다시 <code>MarketAnalysis</code> Pydantic 객체로 변환하고 검증합니다.</li>
+                <li>필수 필드가 누락되었거나 타입이 틀리면 Pydantic이 즉시 에러를 발생시켜, 에이전트(Agent)가 스스로 LLM에게 <strong>재요청</strong>을 보내게끔 유도할 수 있습니다.</li>
+            </ol>
+            <p style="margin-top: 1.5rem; padding: 1rem; background: #f0fdf4; border-left: 4px solid #166534;">💡 <strong>요약하자면:</strong> 이 프로젝트에서 Pydantic은 "AI(LLM)와 파이썬 애플리케이션 사이의 <strong>엄격한 통역사 겸 품질 검사원</strong>" 역할을 수행하고 있다고 볼 수 있습니다.</p>
+        </section>
+
+        <p><a href="applied_tech.html">← 적용 기술 페이지로 돌아가기</a></p>
+    </main>
+</body>
+</html>

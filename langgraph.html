@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LangGraph 상세 설명</title>
+    <style>
+        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; margin: 0; padding: 0; background: #f0fdf4; color: #0f172a; }
+        header { background: #166534; color: white; padding: 2.5rem 1.5rem; text-align: center; }
+        main { max-width: 900px; margin: 2rem auto; padding: 1rem; }
+        h1, h2 { margin: 0 0 1rem; }
+        h2 { color: #166534; font-size: 1.4rem; }
+        p { line-height: 1.8; margin-bottom: 1rem; }
+        ul, ol { margin: 1rem 0; padding-left: 1.5rem; line-height: 1.8; }
+        li { margin-bottom: 0.5rem; }
+        .card { background: white; padding: 1.8rem; border-radius: 12px; box-shadow: 0 4px 10px rgba(0,0,0,0.05); margin-bottom: 2rem; }
+        a { color: #166534; text-decoration: none; font-weight: bold; }
+        a:hover { text-decoration: underline; }
+        code { background: #e2e8f0; padding: 0.2rem 0.4rem; border-radius: 4px; font-family: Consolas, monospace; font-size: 0.9em; }
+        .intro-text { font-size: 1.05rem; }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>LangGraph</h1>
+        <p>다중 에이전트 워크플로우 및 상태 관리 프레임워크</p>
+    </header>
+    <main>
+        <div class="card intro-text">
+            <p><strong>LangGraph</strong>는 LangChain 생태계의 확장 라이브러리로, 단순한 단방향 파이프라인(Chain)을 넘어 <strong>순환(Cyclic) 로직과 상태(State)</strong>를 가진 복잡한 다중 에이전트(Multi-Agent) 시스템을 구축하기 위해 설계되었습니다.</p>
+        </div>
+
+        <section class="card">
+            <h2>1. 🕸️ StateGraph를 통한 노드와 엣지 관리</h2>
+            <p>LangGraph는 시스템을 하나의 '상태 머신(State Machine)' 또는 '그래프'로 취급합니다.</p>
+            <ul>
+                <li><strong>노드 (Nodes):</strong> AI 에이전트나 도구(Tool)가 특정 작업을 수행하는 지점입니다. (예: 시장 분석 노드, 세무 분석 노드)</li>
+                <li><strong>엣지 (Edges):</strong> 노드 간의 실행 순서를 정의합니다. 조건부 엣지(Conditional Edge)를 통해 앞선 결과에 따라 분기(If/Else)할 수 있습니다.</li>
+                <li><strong>상태 (State):</strong> 노드들이 실행될 때 서로 주고받는 데이터 꾸러미입니다. 모든 에이전트가 공유하는 기억 장치(결재판) 역할을 합니다.</li>
+            </ul>
+        </section>
+
+        <section class="card">
+            <h2>2. 🔄 ReAct 패턴과 자율 피드백 루프</h2>
+            <p>단방향 실행 방식과 달리, LangGraph는 에이전트가 스스로 생각하고 도구를 사용한 뒤, 결과를 평가하여 다시 다음 행동을 결정하는 <strong>ReAct(Reasoning and Acting) 패턴</strong> 구현에 최적화되어 있습니다.</p>
+            <ul>
+                <li>세무 전문가 에이전트가 판단하기에 추가적인 최신 정보가 필요하다면 검색 도구를 실행하고, 그 결과를 바탕으로 <strong>다시 원래 노드로 돌아와(루프)</strong> 답변을 보강할 수 있습니다.</li>
+            </ul>
+        </section>
+
+        <section class="card">
+            <h2>3. 💡 future-planner 프로젝트에서의 역할</h2>
+            <p><code>workflow.py</code> 파일에서 LangGraph를 활용하여 다음과 같은 파이프라인을 훌륭하게 구현하고 있습니다.</p>
+            <ol>
+                <li><strong>Market Analyzer:</strong> 사용자의 성향을 바탕으로 ETF 포트폴리오를 구성합니다.</li>
+                <li><strong>Tax Expert:</strong> 위 포트폴리오를 이어받아 세금 전략을 분석합니다.</li>
+                <li><strong>Planner:</strong> 모든 결과를 종합하여 최종 리포트를 검수합니다.</li>
+            </ol>
+            <p style="margin-top: 1.5rem; padding: 1rem; background: #f0fdf4; border-left: 4px solid #166534;">즉, 흩어져 있는 각 분야의 AI 전문가들을 하나의 유기적인 팀으로 묶고, 그들의 <strong>작업 순서와 데이터 전달 과정을 관리하는 수석 매니저</strong> 역할을 하는 것이 바로 LangGraph입니다.</p>
+        </section>
+
+        <p><a href="applied_tech.html">← 적용 기술 페이지로 돌아가기</a></p>
+    </main>
+</body>
+</html>
