@@ -1,0 +1,353 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>기타 노트</title>
+    <style>
+        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; margin: 0; padding: 0; background: #f0fdf4; color: #0f172a; }
+        header { background: #166534; color: white; padding: 2.5rem 1.5rem; text-align: center; }
+        main { max-width: 900px; margin: 2rem auto; padding: 1rem; }
+        h1, h2 { margin: 0 0 1rem; }
+        h2 { color: #166534; font-size: 1.4rem; }
+        p { line-height: 1.8; margin-bottom: 1rem; }
+        ul, ol { margin: 1rem 0; padding-left: 1.5rem; line-height: 1.8; }
+        .card { background: white; padding: 1.8rem; border-radius: 12px; box-shadow: 0 4px 10px rgba(0,0,0,0.05); margin-bottom: 2rem; }
+        a { color: #166534; text-decoration: none; font-weight: bold; }
+        a:hover { text-decoration: underline; }
+
+        /* 노트 앱 스타일 */
+        #note-input {
+            width: 100%;
+            min-height: 100px;
+            padding: 1rem;
+            border: 1px solid #cbd5e1;
+            border-radius: 8px;
+            font-size: 1rem;
+            line-height: 1.6;
+            box-sizing: border-box;
+            margin-bottom: 1rem;
+        }
+        #search-input {
+            width: 100%;
+            padding: 0.8rem;
+            margin-bottom: 1.5rem;
+            border: 1px solid #cbd5e1;
+            border-radius: 8px;
+            font-size: 1rem;
+            box-sizing: border-box;
+        }
+        #add-note-btn {
+            background-color: #166534;
+            color: white;
+            border: none;
+            padding: 0.8rem 1.5rem;
+            border-radius: 8px;
+            font-size: 1rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background-color 0.2s;
+        }
+        #add-note-btn:hover {
+            background-color: #15803d;
+        }
+        #note-list {
+            list-style: none;
+            padding: 0;
+        }
+        #note-list li {
+            background: #f8fafc;
+            padding: 1rem;
+            border-radius: 8px;
+            margin-bottom: 1rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            word-break: break-word;
+        }
+        .note-content {
+            display: flex;
+            flex-direction: column;
+            flex-grow: 1;
+        }
+        .note-text {
+            white-space: pre-wrap; /* 줄바꿈 및 공백을 유지하며 자동 줄바꿈 */
+            margin-bottom: 0.4rem;
+        }
+        .note-time {
+            font-size: 0.8rem;
+            color: #94a3b8;
+        }
+        .btn-group {
+            display: flex;
+            gap: 0.5rem;
+            margin-left: 1rem;
+            flex-shrink: 0;
+        }
+        .edit-btn {
+            background: #3b82f6;
+            color: white;
+            border: none;
+            border-radius: 50%;
+            width: 28px;
+            height: 28px;
+            font-size: 0.8rem;
+            cursor: pointer;
+        }
+        .delete-btn {
+            background: #ef4444;
+            color: white;
+            border: none;
+            border-radius: 50%;
+            width: 28px;
+            height: 28px;
+            font-size: 1rem;
+            cursor: pointer;
+        }
+        /* 페이지네이션 스타일 */
+        .pagination {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 1rem;
+            margin-top: 1.5rem;
+        }
+        .page-btn {
+            background-color: #f8fafc;
+            color: #334155;
+            border: 1px solid #cbd5e1;
+            padding: 0.4rem 0.8rem;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        .page-btn:not(:disabled):hover {
+            background-color: #e2e8f0;
+        }
+        .page-btn:disabled {
+            opacity: 0.4;
+            cursor: not-allowed;
+        }
+        #page-info {
+            font-size: 0.95rem;
+            font-weight: bold;
+            color: #475569;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>기타 노트</h1>
+        <p>간단한 아이디어나 메모를 작성하고 관리하는 공간입니다.</p>
+    </header>
+    <main>
+        <section class="card">
+            <h2>🔗 노트 목록</h2>
+            <ul>
+                <li><a href="bmi-calculator.html">BMI 계산기 앱 만들기</a></li>
+            </ul>
+        </section>
+
+        <section class="card">
+            <h2>📝 새 노트 작성</h2>
+            <textarea id="note-input" placeholder="여기에 메모를 입력하세요..."></textarea>
+            <button id="add-note-btn">노트 추가</button>
+        </section>
+
+        <section class="card">
+            <h2>📋 저장된 노트 목록</h2>
+            <input type="text" id="search-input" placeholder="🔍 노트 내용 검색...">
+            <ul id="note-list"></ul>
+            <div class="pagination">
+                <button id="prev-page-btn" class="page-btn">이전</button>
+                <span id="page-info">1 / 1</span>
+                <button id="next-page-btn" class="page-btn">다음</button>
+            </div>
+        </section>
+
+        <p><a href="../index.html">← 메인 페이지로 돌아가기</a></p>
+    </main>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const noteInput = document.getElementById('note-input');
+            const addNoteBtn = document.getElementById('add-note-btn');
+            const noteList = document.getElementById('note-list');
+            const searchInput = document.getElementById('search-input');
+            
+            let globalNotes = []; // 검색 필터링을 위해 서버에서 불러온 전체 노트를 저장
+            let currentPage = 1;
+            const itemsPerPage = 5;
+            let filteredNotes = []; // 검색된 결과 배열
+
+            const prevPageBtn = document.getElementById('prev-page-btn');
+            const nextPageBtn = document.getElementById('next-page-btn');
+            const pageInfo = document.getElementById('page-info');
+
+            // 접속한 환경에 맞춰 API 주소를 동적으로 할당
+            // 다른 기기에서 IP로 접속했을 때, 해당 IP를 그대로 따라가게 됩니다.
+            const API_URL = window.location.protocol === 'file:' ? 'http://localhost/api/notes' : '/api/notes';
+
+            // 서버(API)에서 전체 노트 불러오기
+            const loadNotes = async () => {
+                try {
+                    const response = await fetch(API_URL);
+                    globalNotes = await response.json();
+                    renderNotes();
+                } catch (error) {
+                    console.error('API 연결 오류: Node.js 서버가 실행 중인지 확인하세요.', error);
+                }
+            };
+
+            // 화면에 노트 렌더링 (검색어 필터링 및 페이지네이션 적용)
+            const renderNotes = () => {
+                const query = searchInput.value.toLowerCase();
+                
+                // 1. 검색어로 필터링 (수정/삭제를 위해 원본 인덱스도 함께 저장)
+                filteredNotes = globalNotes
+                    .map((data, index) => ({ data, originalIndex: index }))
+                    .filter(item => {
+                        const text = typeof item.data === 'string' ? item.data : item.data.text;
+                        return text.toLowerCase().includes(query);
+                    });
+
+                // 2. 페이지네이션 계산
+                const totalPages = Math.ceil(filteredNotes.length / itemsPerPage) || 1;
+                if (currentPage > totalPages) currentPage = totalPages;
+
+                const startIndex = (currentPage - 1) * itemsPerPage;
+                const endIndex = startIndex + itemsPerPage;
+                const notesToShow = filteredNotes.slice(startIndex, endIndex);
+
+                // 3. 화면에 그리기
+                noteList.innerHTML = '';
+                notesToShow.forEach(item => {
+                    createNoteElement(item.data, item.originalIndex);
+                });
+
+                // 4. 페이지 버튼 상태 업데이트
+                pageInfo.textContent = `${currentPage} / ${totalPages}`;
+                prevPageBtn.disabled = currentPage === 1;
+                nextPageBtn.disabled = currentPage === totalPages;
+            };
+
+            // 노트 엘리먼트 생성
+            const createNoteElement = (noteData, index) => {
+                const li = document.createElement('li');
+                
+                // 이전 버전 데이터(문자열) 호환성 처리
+                const text = typeof noteData === 'string' ? noteData : noteData.text;
+                const time = typeof noteData === 'string' ? '' : noteData.timestamp;
+
+                const contentDiv = document.createElement('div');
+                contentDiv.className = 'note-content';
+
+                const textSpan = document.createElement('span');
+                textSpan.className = 'note-text';
+                textSpan.textContent = text;
+                contentDiv.appendChild(textSpan);
+
+                if (time) {
+                    const timeSpan = document.createElement('span');
+                    timeSpan.className = 'note-time';
+                    timeSpan.textContent = time;
+                    contentDiv.appendChild(timeSpan);
+                }
+
+                const btnGroup = document.createElement('div');
+                btnGroup.className = 'btn-group';
+
+                const editBtn = document.createElement('button');
+                editBtn.textContent = '✏️';
+                editBtn.className = 'edit-btn';
+                editBtn.title = '수정';
+                editBtn.onclick = () => editNote(index);
+
+                const deleteBtn = document.createElement('button');
+                deleteBtn.textContent = '×';
+                deleteBtn.className = 'delete-btn';
+                deleteBtn.title = '삭제';
+                deleteBtn.onclick = () => deleteNote(index);
+
+                btnGroup.appendChild(editBtn);
+                btnGroup.appendChild(deleteBtn);
+
+                li.appendChild(contentDiv);
+                li.appendChild(btnGroup);
+                noteList.appendChild(li);
+            };
+
+            // 노트 추가
+            const addNote = async () => {
+                const noteText = noteInput.value.trim();
+                if (noteText) {
+                    try {
+                        await fetch(API_URL, {
+                            method: 'POST',
+                            headers: { 'Content-Type': 'application/json' },
+                            body: JSON.stringify({ text: noteText })
+                        });
+                        noteInput.value = '';
+                        loadNotes();
+                    } catch (error) {
+                        console.error('노트 추가 오류:', error);
+                    }
+                }
+            };
+
+            // 노트 수정
+            const editNote = async (index) => {
+                const currentText = noteList.children[index].querySelector('.note-text').textContent;
+                const newText = prompt("노트를 수정하세요:", currentText);
+                if (newText !== null && newText.trim() !== "") {
+                    try {
+                        await fetch(`${API_URL}/${index}`, {
+                            method: 'PUT',
+                            headers: { 'Content-Type': 'application/json' },
+                            body: JSON.stringify({ text: newText.trim() })
+                        });
+                        loadNotes();
+                    } catch (error) {
+                        console.error('노트 수정 오류:', error);
+                    }
+                }
+            };
+
+            // 노트 삭제
+            const deleteNote = async (index) => {
+                try {
+                    await fetch(`${API_URL}/${index}`, { method: 'DELETE' });
+                    loadNotes();
+                } catch (error) {
+                    console.error('노트 삭제 오류:', error);
+                }
+            };
+
+            addNoteBtn.addEventListener('click', addNote);
+            
+            // 검색어 입력 시 첫 페이지로 이동 후 렌더링
+            searchInput.addEventListener('input', () => {
+                currentPage = 1;
+                renderNotes();
+            });
+
+            // 페이지 이동 이벤트
+            prevPageBtn.addEventListener('click', () => {
+                if (currentPage > 1) {
+                    currentPage--;
+                    renderNotes();
+                }
+            });
+            nextPageBtn.addEventListener('click', () => {
+                const totalPages = Math.ceil(filteredNotes.length / itemsPerPage) || 1;
+                if (currentPage < totalPages) {
+                    currentPage++;
+                    renderNotes();
+                }
+            });
+
+            loadNotes();
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Swagger UI 상세 설명</title>
+    <style>
+        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; margin: 0; padding: 0; background: #f0fdf4; color: #0f172a; }
+        header { background: #166534; color: white; padding: 2.5rem 1.5rem; text-align: center; }
+        main { max-width: 900px; margin: 2rem auto; padding: 1rem; }
+        h1, h2 { margin: 0 0 1rem; }
+        h2 { color: #166534; font-size: 1.4rem; }
+        p { line-height: 1.8; margin-bottom: 1rem; }
+        ul, ol { margin: 1rem 0; padding-left: 1.5rem; line-height: 1.8; }
+        li { margin-bottom: 0.5rem; }
+        .card { background: white; padding: 1.8rem; border-radius: 12px; box-shadow: 0 4px 10px rgba(0,0,0,0.05); margin-bottom: 2rem; }
+        a { color: #166534; text-decoration: none; font-weight: bold; }
+        a:hover { text-decoration: underline; }
+        code { background: #e2e8f0; padding: 0.2rem 0.4rem; border-radius: 4px; font-family: Consolas, monospace; font-size: 0.9em; }
+        .intro-text { font-size: 1.05rem; }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Swagger UI (FastAPI 내장)</h1>
+        <p>코드를 기반으로 자동 생성되는 인터랙티브 API 문서 및 테스트 도구</p>
+    </header>
+    <main>
+        <div class="card intro-text">
+            <p><strong>Swagger UI</strong>는 OpenAPI Specification(API 명세 표준)을 기반으로 API를 시각화하고, 브라우저에서 직접 테스트해볼 수 있는 인터랙티브 문서를 제공하는 도구입니다. <strong>FastAPI</strong>는 이를 기본적으로 내장하고 있어, 개발자가 별도의 작업 없이도 강력한 API 문서를 가질 수 있게 해줍니다.</p>
+        </div>
+
+        <section class="card">
+            <h2>1. ✍️ 코드 = 문서 (Code as Documentation)</h2>
+            <p>FastAPI는 개발자가 작성한 파이썬 코드를 분석하여 API 문서를 자동으로 생성합니다.</p>
+            <ul>
+                <li><strong>경로 연산(Path Operation):</strong> <code>@app.post("/plan")</code>과 같이 정의된 엔드포인트가 문서에 자동으로 등록됩니다.</li>
+                <li><strong>Pydantic 모델:</strong> 요청 본문(Request Body)이나 응답 모델(Response Model)로 지정된 Pydantic 클래스(예: <code>schemas.UserInput</code>)의 구조, 타입, 제약 조건(<code>Field</code>의 <code>description</code> 등)이 문서에 상세히 반영됩니다.</li>
+                <li>이를 통해 API 문서를 별도로 작성하고 관리해야 하는 번거로움이 사라지고, 코드와 문서가 항상 일치하게 됩니다.</li>
+            </ul>
+        </section>
+
+        <section class="card">
+            <h2>2. 🚀 브라우저에서 직접 API 테스트</h2>
+            <p>FastAPI 애플리케이션을 실행하고 <code>/docs</code> 경로에 접속하면, 모든 API 엔드포인트 목록을 볼 수 있습니다. 여기서 각 API를 펼쳐 'Try it out' 버튼을 누르면 직접 테스트가 가능합니다.</p>
+            <ul>
+                <li>파라미터나 요청 본문(JSON)을 입력하고 'Execute' 버튼을 누르면, 실제 서버로 요청이 전송됩니다.</li>
+                <li>서버의 응답 코드(200, 404 등), 응답 본문, 헤더 등을 즉시 확인할 수 있어, 프론트엔드 개발 전 백엔드 로직을 검증하고 디버깅하는 데 매우 유용합니다.</li>
+            </ul>
+        </section>
+
+        <section class="card">
+            <h2>3. 💡 future-planner 프로젝트에서의 역할</h2>
+            <p>이 프로젝트에서 Swagger UI는 <strong>백엔드 개발자의 핵심 테스트 및 디버깅 도구</strong>로 활용됩니다.</p>
+            <ul>
+                <li>프론트엔드(Streamlit)와 연동하기 전에, FastAPI 서버의 <code>/plan</code> 엔드포인트가 예상대로 동작하는지 독립적으로 테스트할 수 있습니다.</li>
+                <li>예를 들어, Swagger UI에서 직접 <code>{"monthly_income": 3000000, "risk_appetite": "aggressive"}</code>와 같은 JSON 데이터를 입력하여 LangGraph 워크플로우를 트리거하고, 스트리밍되는 응답 조각들을 확인할 수 있습니다.</li>
+            </ul>
+            <p style="margin-top: 1.5rem; padding: 1rem; background: #f0fdf4; border-left: 4px solid #166534;">결론적으로, Swagger UI는 복잡한 AI 에이전트 파이프라인을 API 뒤에 숨기고, 잘 정의된 인터페이스를 통해 안정적으로 호출할 수 있도록 돕는 <strong>백엔드의 '품질 보증서'이자 '테스트 장비'</strong> 역할을 수행합니다.</p>
+        </section>
+
+        <section class="card">
+            <h2>4. 🖥️ 실제 사용 예시</h2>
+            <p><code>uvicorn src.app:app --reload --host 0.0.0.0 --port 8000</code> 명령어로 서버를 실행한 후 <code>/docs</code> 주소에 접속하면 다음과 같은 작업을 할 수 있습니다.</p>
+            <ul>
+                <li><strong>API 엔드포인트 목록 확인:</strong> <code>app.py</code>에 정의된 모든 API 경로(예: <code>/</code> 와 <code>/chat</code>)와 사용 가능한 HTTP 메서드(GET, POST 등)를 한눈에 볼 수 있습니다.</li>
+                <li><strong>요청/응답 형식 파악:</strong> 각 API가 어떤 형식의 데이터를 요청(<code>QueryRequest</code>)하고 어떤 형식으로 응답(<code>QueryResponse</code>)하는지 명확하게 알 수 있습니다.</li>
+                <li><strong>API 직접 테스트:</strong> 가장 유용한 기능으로, 웹 페이지에서 'Try it out' 버튼을 눌러 직접 API를 호출하고 실시간으로 응답 결과를 확인할 수 있습니다. 예를 들어, <code>/chat</code> 엔드포인트에 질문을 입력하고 실행하면 RAG 체인이 동작하여 답변을 반환하는 것을 바로 테스트할 수 있습니다.</li>
+            </ul>
+        </section>
+
+        <p><a href="applied_tech.html">← 적용 기술 페이지로 돌아가기</a></p>
+    </main>
+</body>
+</html>

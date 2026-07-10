@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI 코딩 | Skills</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: #f5f3ff; /* Light purple background */
+            color: #1f2937;
+            margin: 0;
+            padding: 0;
+        }
+        header {
+            background: linear-gradient(135deg, #6d28d9 0%, #4c1d95 100%); /* Purple gradient */
+            color: white;
+            padding: 3rem 1.5rem;
+            text-align: center;
+        }
+        header h1 {
+            margin: 0;
+            font-size: 2.4rem;
+        }
+        header p {
+            margin: 0.75rem auto 0;
+            max-width: 700px;
+            line-height: 1.7;
+            opacity: 0.9;
+        }
+        .container {
+            width: 90%;
+            max-width: 1000px;
+            margin: 2rem auto 4rem;
+        }
+        .card {
+            background: white;
+            border-radius: 14px;
+            box-shadow: 0 10px 30px rgba(15, 23, 42, 0.07);
+            padding: 2rem;
+            margin-bottom: 1.5rem;
+        }
+        .card h2, .card h3 {
+            margin-top: 0;
+            color: #4c1d95; /* Dark purple */
+        }
+        .card h3 {
+            font-size: 1.3rem;
+            border-bottom: 1px solid #ddd6fe;
+            padding-bottom: 0.5rem;
+        }
+        .card ul {
+            list-style: none;
+            padding: 0;
+            margin: 1rem 0 0 0;
+        }
+        .card li {
+            padding: 0.7rem 0;
+            border-bottom: 1px solid #f3f4f6;
+        }
+        .card li:last-child {
+            border-bottom: none;
+        }
+        code {
+            background-color: #ede9fe; /* Lighter purple */
+            color: #5b21b6; /* Purple */
+            padding: 3px 6px;
+            border-radius: 4px;
+            font-family: "SFMono-Regular", Consolas, "Liberation Mono", Menlo, Courier, monospace;
+        }
+        strong {
+            color: #9333ea; /* Another shade of purple */
+            font-weight: 600;
+        }
+        .back-link {
+            text-align: center;
+            margin-top: 2rem;
+        }
+        .back-link a {
+            color: #5b21b6;
+            text-decoration: none;
+            font-weight: bold;
+        }
+        .back-link a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <h1>AI Coding</h1>
+        <p>AI 코딩 어시스턴트를 활용한 프롬프트 엔지니어링 및 개발 생산성 향상 기술을 소개합니다.</p>
+    </header>
+
+    <div class="container">
+        <div class="card">
+            <h2>AI 어시스턴트 활용 예시: 프롬프트 요구사항</h2>
+            <p>아래는 Python Streamlit과 SQLite를 사용한 간단한 CRUD 웹앱 생성을 AI에게 요청하는 프롬프트 예시입니다. 명확하고 구조화된 요구사항을 통해 원하는 결과물을 효과적으로 얻어내는 과정을 보여줍니다.</p>
+        </div>
+
+        <div class="card">
+            <h3>1. 기본 목표 및 기술 스택</h3>
+            <ul>
+                <li><strong>목표:</strong> 간단한 사용자 관리(CRUD) 웹 애플리케이션 제작 (<code>testdb.py</code>)</li>
+                <li><strong>언어:</strong> Python</li>
+                <li><strong>UI 프레임워크:</strong> Streamlit</li>
+                <li><strong>데이터베이스:</strong> SQLite</li>
+                <li><strong>데이터 처리:</strong> Pandas</li>
+            </ul>
+        </div>
+
+        <div class="card">
+            <h3>2. 데이터베이스 설정 (<code>sample.db</code>)</h3>
+            <ul>
+                <li><code>users</code> 테이블 생성: <code>id</code> (PK, Auto-increment), <code>name</code> (Text), <code>age</code> (Integer)</li>
+                <li>CRUD 기능 함수 모듈화</li>
+                <li><strong>[중요]</strong> 쿼리 시 <code>id</code> 값은 <code>int()</code>로 명시적 형 변환하여 타입 오류 방지</li>
+                <li><code>UPDATE</code>/<code>DELETE</code> 실행 후 <code>cursor.rowcount</code>로 1개 행만 변경되었는지 검증하여 데이터 무결성 확보</li>
+            </ul>
+        </div>
+
+        <div class="card">
+            <h3>3. Streamlit UI 구성</h3>
+            <ul>
+                <li><strong>사용자 추가:</strong> <code>st.form</code> 사용, 이름/나이 입력. 이름 누락 시 경고.</li>
+                <li><strong>사용자 목록:</strong> <code>st.data_editor</code> 사용, 최신순(id 내림차순) 정렬.</li>
+                <li><strong>단일 선택:</strong> '선택' 체크박스 열을 추가하여 한 번에 한 명만 선택 가능하도록 구현.</li>
+                <li><strong>읽기 전용:</strong> 데이터 열(ID, 이름, 나이)은 수정 불가 처리.</li>
+                <li><strong>검색:</strong> <code>st.text_input</code>으로 대소문자 무관 이름 검색 기능 구현.</li>
+                <li><strong>페이지네이션:</strong> 한 페이지에 10개씩 목록 표시, 이전/다음 버튼으로 페이지 이동.</li>
+            </ul>
+        </div>
+
+        <div class="card">
+            <h3>4. 사용자 수정 및 삭제</h3>
+            <ul>
+                <li><strong>버튼 활성화:</strong> 목록에서 사용자를 선택해야 '수정', '삭제' 버튼 활성화.</li>
+                <li><strong>수정:</strong> <code>st.dialog</code>를 사용하여 선택된 사용자 정보가 채워진 수정 창 표시.</li>
+                <li><strong>삭제:</strong> "정말로 OOO님을 삭제하시겠습니까?"와 같은 확인 절차 후 삭제 실행.</li>
+            </ul>
+        </div>
+
+        <div class="card">
+            <h3>5. 상태 관리 및 안정성</h3>
+            <ul>
+                <li><strong>상태 관리:</strong> <code>st.session_state</code>로 선택된 사용자 ID, 페이지 번호, 검색어 등 관리.</li>
+                <li><strong>UI 갱신:</strong> 상태 변경 작업 후 <code>st.rerun()</code> 호출로 즉시 UI 업데이트.</li>
+                <li><strong>선택 해제:</strong> 검색 또는 페이지 이동 시 기존 선택 자동 해제.</li>
+                <li><strong>키 동적 생성:</strong> <code>st.data_editor</code>의 <code>key</code>를 동적으로 생성하여 상태 꼬임 방지.</li>
+                <li><strong>로깅:</strong> 주요 기능 실행 시 <code>logging</code>으로 정보 기록.</li>
+            </ul>
+        </div>
+
+        <p class="back-link"><a href="../index.html">← 메인 페이지로 돌아가기</a></p>
+    </div>
+
+</body>
+</html>
